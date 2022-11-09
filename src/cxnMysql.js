@@ -10,4 +10,4 @@ const cxn = mysql.createConnection({
 });
 
 
-module.exports = cxn;
+module.exports = {cxn};

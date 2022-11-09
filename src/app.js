@@ -3,6 +3,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
+const routes = require('./routes/routes.js')
+
 const server = express();
 server.name = 'Simple_ECommerce_BackEnd';
 
@@ -23,7 +25,7 @@ server.use((req, res, next) => {
   next();
 });
 
-//server.use('/', routes);
+server.use('/', routes);
 
 // Error catching endware.
 server.use((err, req, res, next) => {
