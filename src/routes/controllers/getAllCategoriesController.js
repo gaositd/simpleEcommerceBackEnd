@@ -1,10 +1,9 @@
 const { category } = require("../../cxnMysql");
-
-const {TBL_CATEGORY, NOT_FOUND} = process.env;
+const { NOT_FOUND } = process.env;
 
 async function getAllCategories(req, res) {
   try{
-    const allCategories = category.findAll();
+    const allCategories = await category.findAll();
 
     if(allCategories.length){
       res
