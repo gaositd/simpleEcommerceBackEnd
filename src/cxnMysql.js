@@ -1,13 +1,26 @@
-require('dotenv').config();
-const mysql = require('mysql2');
-const {DB_HOST, DB_USER, DB_NAME, DB_PASS } = process.env;
+require("dotenv").config();
+const { Sequelize } = require("sequelize");
+const fs = require('fs');
+const path = require('path');
+const { DB_HOST, DB_USER, DB_NAME, DB_PASS, DIALECT } = process.env;
 
-const cxn = mysql.createConnection({
-  host: DB_HOST || 'localhost',
-  user: DB_USER || 'root',
-  database: DB_NAME,
-  password: DB_PASS
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+  dialect: DIALECT,
 });
 
+const basename = path.basename(__filename);
+const modelDefiners = [];
+fs.readdirSync(path.join(__dirname, '/models'))
+  .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+  .forEach((file) => {
+    modelDefiners.push(require(path.join(__dirname, '/models', file)));
+  });
 
-module.exports = {cxn};
+  modelDefiners.forEach(model => model(sequelize));
+
+  const { category, product } = sequelize.models;
+
+module.exports = {
+  ...sequelize.models,
+  cxn: sequelize
+}
