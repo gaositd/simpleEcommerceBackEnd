@@ -10,7 +10,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
   define: {
     freezeTableName: true,
     timestamps: false,
-    freezeColumnName: true
+    freezeColumnName: true,
   },
 });
 
@@ -32,7 +32,6 @@ sequelize.models = Object.fromEntries(entries);
 modelDefiners.forEach((model) => model(sequelize));
 
 const { category, product } = sequelize.models;
-// category.belongsTo(product, { through: "categoryProducts" });
 
 module.exports = {
   ...sequelize.models,

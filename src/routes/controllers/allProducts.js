@@ -3,7 +3,6 @@ const { NOT_FOUND } = process.env;
 
 const allProducts = async (req, res) => {
   let search = req.params.search;
-  // search = search.toUpperCase();
   try {
     const products = await product.findAll();
 
